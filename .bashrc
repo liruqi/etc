@@ -1,3 +1,4 @@
+# extract compressed files. http://serverfault.com/questions/3743/
 extract () {
    if [ -f $1 ] ; then
        case $1 in
@@ -19,4 +20,9 @@ extract () {
    fi
 }
 
-# http://serverfault.com/questions/3743/
+# setup proxy if needed
+country=`wget -qO - ifconfig.co/x-ifconfig-country`
+if [ $country == "China" ]; then
+   export http_proxy=http://tw.liruqi.info:21
+   export https_proxy=http://tw.liruqi.info:21
+fi
