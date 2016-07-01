@@ -26,3 +26,12 @@ if [ $country == "China" ]; then
    export http_proxy=http://tw.liruqi.info:21
    export https_proxy=http://tw.liruqi.info:21
 fi
+
+# http://askubuntu.com/questions/323944/convert-webm-to-other-formats
+webmTOmp4 () {
+   ffmpeg -i "$1".webm -qscale 0 "$1".mp4
+}
+
+mp4TOmp3 () {
+   ffmpeg -i "$1".mp4 "$1".mp3
+}
