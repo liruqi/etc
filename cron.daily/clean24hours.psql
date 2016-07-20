@@ -1,0 +1,10 @@
+delete from "history_messages" where date < NOW() - '7 day'::interval;
+
+delete
+from "history_messages" using user_dialogs  where
+history_messages.user_id = user_dialogs.user_id
+AND history_messages.peer_type = user_dialogs.peer_type
+AND history_messages.peer_id = user_dialogs.peer_id
+AND history_messages.date < user_dialogs.last_read_at
+AND history_messages.date < NOW() - '1 day'::interval;
+

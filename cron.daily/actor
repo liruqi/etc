@@ -1,0 +1,9 @@
+#!/bin/sh
+
+mkdir -p /srv/actor-server-2016/db/
+sudo -u postgres pg_dump actor > /tmp/actor.psql 
+mv /tmp/actor.psql /srv/actor-server-2016/db/`date +"%Y-%m-%d-%H"`.psql
+
+date >> /srv/actor-server-2016/db/`date +"%Y-%m-%d"`.log
+sudo -u postgres psql -d actor -f /srv/actor-server-2016/clean24hours.psql >> /srv/actor-server-2016/db/`date +"%Y-%m-%d"`.log
+
