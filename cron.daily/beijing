@@ -1,0 +1,8 @@
+#!/bin/sh
+#set -e
+cd /opt/liruqi/beijing/210.75.213.188
+bash -x crawler.sh >> /tmp/housing.log
+
+cd /opt/liruqi/beijing/cma.gov.cn
+bash -x crawler.sh >> /tmp/cma.log
+
