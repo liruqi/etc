@@ -1,0 +1,8 @@
+
+server {
+	server_name us.liruqi.info;
+	root /srv/http/us.liruqi.info;
+
+	index index.html;
+
+}

@@ -1,0 +1,39 @@
+server {
+	root /srv/http/nav.liruqi.info;
+	index index.html index.php;
+
+	server_name nav.liruqi.info;
+	error_log  /var/log/nginx/nav.liruqi.info.error.log;
+	access_log  /var/log/nginx/nav.liruqi.info.access.log;
+
+    error_page 404 /404.html;
+
+	location ~ \.php$ {
+		fastcgi_split_path_info ^(.+\.php)(/.+)$;
+		fastcgi_pass 127.0.0.1:9000;
+		fastcgi_index index.php;
+		include fastcgi_params;
+	}
+
+	location ~ /(video|wwdc) {
+		autoindex on;
+	}
+}
+
+# for a site generating pac urls
+server {
+	root /srv/http/pac.liruqi.info;
+	index index.html index.php;
+
+	server_name pac.liruqi.info;
+	error_log  /var/log/nginx/nav.liruqi.info.error.log;
+	access_log  /var/log/nginx/nav.liruqi.info.access.log;
+
+	location ~ \.php$ {
+		fastcgi_split_path_info ^(.+\.php)(/.+)$;
+		fastcgi_pass 127.0.0.1:9000;
+		fastcgi_index index.php;
+		include fastcgi_params;
+	}
+}
+

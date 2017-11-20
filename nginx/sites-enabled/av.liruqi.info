@@ -1,0 +1,47 @@
+server {
+	server_name av.liruqi.info;
+	error_log  /var/log/nginx/av.liruqi.info.error.log;
+	access_log  /var/log/nginx/av.liruqi.info.access.log;
+
+    location / {
+        proxy_set_header  X-Real-IP  $remote_addr;
+        proxy_set_header  Accept-Encoding  “”;
+        proxy_pass http://www.ixxx.com/;
+        sub_filter www.ixxx.com av.liruqi.info;
+        sub_filter_once off;
+    }
+}
+
+server {
+	server_name cl.liruqi.info;
+	error_log  /var/log/nginx/cl.liruqi.info.error.log;
+	access_log  /var/log/nginx/cl.liruqi.info.access.log;
+
+    location / {
+        proxy_set_header  X-Real-IP  $remote_addr;
+        proxy_pass http://t66y.com/;
+        # sub_filter t66y.com cl.liruqi.info;
+        sub_filter_once off;
+    }
+}
+
+server {
+	server_name g.liruqi.info gg.liruqi.info g.beijingxi.net g.roomchat.im;
+	error_log  /var/log/nginx/g.liruqi.info.error.log;
+	access_log  /var/log/nginx/g.liruqi.info.access.log;
+
+    location / {
+        proxy_set_header  X-Real-IP  $remote_addr;
+        proxy_pass https://google.com.hk/;
+        # sub_filter t66y.com cl.liruqi.info;
+        sub_filter_once off;
+    }
+}
+
+server {
+    index  index.php;
+    server_name   s1.liruqi.info;
+    rewrite (.*) http://vpn.liruqi.info/ permanent;
+}
+
+

@@ -1,0 +1,65 @@
+
+server {
+	root /srv/http/telechat.im/actor.im;
+	index index.html index.php;
+    autoindex on;
+	server_name actor.im actbox.im;
+	error_log  /var/log/nginx/actor.error.log;
+	access_log  /var/log/nginx/actor.access.log;
+
+    rewrite ^/ios$ https://itunes.apple.com/us/app/actbox/id1020993225?mt=8 last;
+
+	location ~ \.php$ {
+		fastcgi_split_path_info ^(.+\.php)(/.+)$;
+		fastcgi_pass 127.0.0.1:9000;
+		fastcgi_index index.php;
+		include fastcgi_params;
+	}
+}
+
+server {
+	root /srv/http/telechat.im/telechat.im;
+	index index.html index.php;
+    #autoindex on;
+	server_name telechat.im;
+	error_log  /var/log/nginx/telechat.error.log;
+	access_log  /var/log/nginx/telechat.access.log;
+
+# Rewrites
+  location / {
+
+    # Try files, then folders, then yourls-loader.php
+    # --- The most important line ---
+    try_files $uri $uri/ /yourls-loader.php;
+
+    # PHP engine
+    location ~ \.php$ {
+      try_files      $uri =404;
+	  fastcgi_pass 127.0.0.1:9000;
+      fastcgi_index  index.php;
+    #  fastcgi_param  SCRIPT_FILENAME  $document_root$fastcgi_script_name;
+      include        fastcgi_params;
+    }
+  }
+}
+
+server {
+	root /srv/http/api.liruqi.info;
+    listen       80;
+    listen 443 ssl;
+	index index.html index.php;
+    autoindex on;
+	server_name api.liruqi.info;
+	error_log  /var/log/nginx/api.error.log;
+	access_log  /var/log/nginx/api.access.log;
+
+    ssl_certificate /etc/letsencrypt/live/api.liruqi.info/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/api.liruqi.info/privkey.pem;
+
+	location ~ \.php$ {
+		fastcgi_split_path_info ^(.+\.php)(/.+)$;
+		fastcgi_pass 127.0.0.1:9000;
+		fastcgi_index index.php;
+		include fastcgi_params;
+	}
+}

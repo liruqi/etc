@@ -1,0 +1,20 @@
+server {
+	index index.html index.php;
+	autoindex  on;
+	server_name atoz.liruqi.info;
+	root /srv/http/atoz.liruqi.info;
+
+	error_log  /var/log/nginx/atoz.error.log;
+	access_log  /var/log/nginx/atoz.access.log;
+}
+
+server {
+	index index.html index.php;
+	autoindex  on;
+	server_name trex.liruqi.info;
+	root /srv/http/trex.liruqi.info;
+
+	error_log  /var/log/nginx/trex.error.log;
+	access_log  /var/log/nginx/trex.access.log;
+}
+

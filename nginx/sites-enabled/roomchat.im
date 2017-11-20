@@ -1,0 +1,93 @@
+server {
+	root /srv/http/chinapedia.org;
+	index  index.php;
+	server_name  chinapedia.org www.chinapedia.org;
+
+	location ~ \.php$ {
+		fastcgi_split_path_info ^(.+\.php)(/.+)$;
+		fastcgi_pass 127.0.0.1:9000;
+		fastcgi_index index.php;
+		include fastcgi_params;
+	}
+    autoindex on;
+    if (!-e $request_filename){
+        rewrite ^/ /index.php?r=$1;
+    }
+    access_log  /srv/http/chinapedia.org/access.log;
+    error_log  /srv/http/chinapedia.org/error.log;
+}
+
+
+server {
+	index  index.php index.html;
+	server_name   roomchat.im;
+	root /srv/http/roomchat.im;
+    location ~ \.php$ {
+		fastcgi_split_path_info ^(.+\.php)(/.+)$;
+		fastcgi_pass 127.0.0.1:9000;
+		fastcgi_index index.php;
+		include fastcgi_params;
+	}
+        autoindex on;
+    access_log  /var/log/nginx/roomchat.access.log;
+    error_log  /var/log/nginx/roomchat.error.log;
+}
+
+server {
+	index  index.php;
+	server_name   en.roomchat.im cs.chinapedia.org;
+    root /srv/http/en.roomchat.im/mediawiki-1.26.2;
+
+    location ~ \.php$ {
+		fastcgi_split_path_info ^(.+\.php)(/.+)$;
+		fastcgi_pass 127.0.0.1:9000;
+		fastcgi_index index.php;
+		include fastcgi_params;
+	}
+    access_log  /var/log/nginx/roomchat_en.access.log;
+    error_log  /var/log/nginx/roomchat_en.error.log;
+}
+
+server {
+	index  index.php;
+	server_name   zh.roomchat.im;
+	root /srv/http/zh.roomchat.im.mediawiki.1.29.0;
+
+    location ~ \.php$ {
+        
+        if ($arg_type ~ signup) {
+            set $roomchat S;
+        }
+        
+        if ($http_accept_language ~ zh) {
+            set $roomchat "${roomchat}Z";
+        }
+
+        if ($roomchat = S) {
+            rewrite ^/(.*)$ http://liruqi.info/aa last;
+        }
+
+		fastcgi_split_path_info ^(.+\.php)(/.+)$;
+		fastcgi_pass 127.0.0.1:9000;
+		fastcgi_index index.php;
+		include fastcgi_params;
+	}
+    access_log  /var/log/nginx/roomchat.access.log;
+    error_log  /var/log/nginx/roomchat.error.log;
+}
+
+server {
+	index  index.php;
+	server_name   wiki.zh.roomchat.im;
+	root /srv/http/wiki.zh.roomchat.im;
+    location ~ \.php$ {
+		fastcgi_split_path_info ^(.+\.php)(/.+)$;
+		fastcgi_pass 127.0.0.1:9000;
+		fastcgi_index index.php;
+		include fastcgi_params;
+	}
+    access_log  /var/log/nginx/roomchat.access.log;
+    error_log  /var/log/nginx/roomchat.error.log;
+}
+
+

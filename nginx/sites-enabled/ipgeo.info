@@ -1,0 +1,54 @@
+server {
+	root /srv/http/ipgeo.info;
+	index index.html index.php;
+
+	server_name ipgeo.info;
+    error_log  /var/log/nginx/ipgeo.info.error.log;
+    access_log  /var/log/nginx/ipgeo.info.access.log;
+
+    if (!-f $request_filename) {
+        rewrite ^/(.*)$ /index.php?kohana_uri=$1 last;
+    }
+
+    # Deny /application access.
+        location ^~ /application {
+                deny all;
+                break;
+        }
+ 
+        # Deny /modules access.
+        location ^~ /modules {
+                allow 127.0.0.1;
+                deny all;
+                break;
+        }
+ 
+        # Deny /system access.
+        location ^~ /system {
+                deny all;
+                break;
+        }
+ 
+        # Deny /sql access.
+        location ^~ /sql {
+                deny all;
+                break;
+        }
+ 
+        # Deny /tests access.
+        location ^~ /tests {
+                deny all;
+                break;
+        }
+ 
+
+	# pass the PHP scripts to FastCGI server listening on 127.0.0.1:9000
+	#
+	location ~ \.php$ {
+		fastcgi_split_path_info ^(.+\.php)(/.+)$;
+		fastcgi_pass 127.0.0.1:9000;
+		fastcgi_index index.php;
+		include fastcgi_params;
+	}
+
+}

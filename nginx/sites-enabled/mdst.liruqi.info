@@ -1,0 +1,21 @@
+server {
+	root /srv/http/mdst.liruqi.info;
+	index index.html index.php;
+
+	server_name mdst.liruqi.info;
+    error_log  /var/log/nginx/mdst.error.log;
+    access_log  /var/log/nginx/mdst.access.log;
+
+location ~ \.asp {
+     rewrite ^ http://mdst365.com$request_uri? permanent; 
+}
+	# pass the PHP scripts to FastCGI server listening on 127.0.0.1:9000
+	#
+	location ~ \.php$ {
+		fastcgi_split_path_info ^(.+\.php)(/.+)$;
+		fastcgi_pass 127.0.0.1:9000;
+		fastcgi_index index.php;
+		include fastcgi_params;
+	}
+
+}

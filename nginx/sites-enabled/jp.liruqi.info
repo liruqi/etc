@@ -1,0 +1,16 @@
+server {
+	index index.html index.php;
+    autoindex  on;
+	server_name tw.liruqi.info;
+	error_log  /var/log/nginx/jp.liruqi.info.error.log;
+	access_log  /var/log/nginx/jp.liruqi.info.access.log;
+
+	root /srv/http/tw.liruqi.info;
+
+    location ~ \.php$ {
+        fastcgi_split_path_info ^(.+\.php)(/.+)$;
+        fastcgi_pass 127.0.0.1:9000;
+        fastcgi_index index.php;
+        include fastcgi_params;
+    }
+}

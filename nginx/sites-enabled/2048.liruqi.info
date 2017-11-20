@@ -1,0 +1,10 @@
+server {
+	index index.html index.php;
+	autoindex  on;
+	server_name 2048.liruqi.info;
+	root /srv/http/2048.liruqi.info;
+
+	error_log  /var/log/nginx/2048.error.log;
+	access_log  /var/log/nginx/2048.access.log;
+}
+
