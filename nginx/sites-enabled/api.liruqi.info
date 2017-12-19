@@ -1,0 +1,17 @@
+server {
+	root /srv/http/api.liruqi.info;
+	listen       80;
+	listen 443 ssl;
+	index index.html index.php;
+	autoindex on;
+	server_name api.liruqi.info;
+	error_log  /var/log/nginx/api.error.log;
+	access_log  /var/log/nginx/api.access.log;
+
+	location ~ \.php$ {
+		fastcgi_split_path_info ^(.+\.php)(/.+)$;
+		fastcgi_pass 127.0.0.1:1987;
+		fastcgi_index index.php;
+		include fastcgi_params;
+	}
+}

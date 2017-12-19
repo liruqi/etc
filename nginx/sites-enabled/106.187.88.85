@@ -43,23 +43,3 @@ server {
   }
 }
 
-server {
-	root /srv/http/api.liruqi.info;
-    listen       80;
-    listen 443 ssl;
-	index index.html index.php;
-    autoindex on;
-	server_name api.liruqi.info;
-	error_log  /var/log/nginx/api.error.log;
-	access_log  /var/log/nginx/api.access.log;
-
-    ssl_certificate /etc/letsencrypt/live/api.liruqi.info/fullchain.pem;
-    ssl_certificate_key /etc/letsencrypt/live/api.liruqi.info/privkey.pem;
-
-	location ~ \.php$ {
-		fastcgi_split_path_info ^(.+\.php)(/.+)$;
-		fastcgi_pass 127.0.0.1:9000;
-		fastcgi_index index.php;
-		include fastcgi_params;
-	}
-}
