@@ -12,3 +12,6 @@ function Get-ContentUtf8 {
 }
 
 Set-Alias cat Get-ContentUtf8
+
+# 处理 Git 中文乱码，
+chcp.com 65001
